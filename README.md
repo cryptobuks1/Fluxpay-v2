@@ -20,8 +20,5 @@ Make sure you have the following:
 ## Database SQL File
 SQL File is located inside the database directory
 
-<<<<<<< HEAD
-env file is located inside <b>core</b> folder.
 =======
 env file is located inside <b>core</b> folder.
->>>>>>> 45e5dc64ad0bcac5448de79cc0351233afd919ee

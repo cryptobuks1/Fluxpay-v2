@@ -1,25 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 03, 2020 at 08:09 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.2.26
+-- Host: localhost:3306
+-- Generation Time: Apr 10, 2020 at 12:50 PM
+-- Server version: 5.7.25
+-- PHP Version: 7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
--- Database: `probank`
+-- Database: `fluxp`
 --
 
 -- --------------------------------------------------------
@@ -30,10 +22,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `about_site` (
   `id` int(1) NOT NULL,
-  `about` text DEFAULT NULL,
-  `terms` text DEFAULT NULL,
-  `privacy_policy` text DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `about` text,
+  `terms` text,
+  `privacy_policy` text,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -55,7 +47,7 @@ CREATE TABLE `admin` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -81,7 +73,7 @@ CREATE TABLE `admin_bank` (
   `iban` varchar(32) NOT NULL,
   `acct_no` varchar(15) NOT NULL,
   `status` int(2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -90,7 +82,7 @@ CREATE TABLE `admin_bank` (
 --
 
 INSERT INTO `admin_bank` (`id`, `name`, `bank_name`, `address`, `swift`, `iban`, `acct_no`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Boomchart', 'Citi bank', 'Somewhere in uk', '5444', '5678876', '12345678982', 1, '2020-02-10 15:14:07', '2020-02-10 14:14:07');
+(1, 'Flux Technology Africa', 'ZENITH BANK', 'LAGOS BRANCH', '43434334343434', '343434343', '43434343434343', 1, '2020-04-09 11:38:17', '2020-04-09 10:38:17');
 
 -- --------------------------------------------------------
 
@@ -105,9 +97,9 @@ CREATE TABLE `alerts` (
   `details` text NOT NULL,
   `type` int(2) NOT NULL,
   `seen` int(2) NOT NULL,
-  `status` int(1) NOT NULL DEFAULT 0,
+  `status` int(1) NOT NULL DEFAULT '0',
   `reference` varchar(32) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -134,13 +126,13 @@ INSERT INTO `alerts` (`id`, `user_id`, `amount`, `details`, `type`, `seen`, `sta
 CREATE TABLE `bank` (
   `id` int(32) NOT NULL,
   `user_id` int(32) NOT NULL,
-  `name` text DEFAULT NULL,
-  `address` text DEFAULT NULL,
+  `name` text,
+  `address` text,
   `iban` varchar(32) DEFAULT NULL,
   `swift` varchar(32) DEFAULT NULL,
   `acct_no` varchar(32) DEFAULT NULL,
   `acct_name` varchar(191) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -164,7 +156,7 @@ CREATE TABLE `bank_transfer` (
   `details` text NOT NULL,
   `image` varchar(32) NOT NULL,
   `status` int(2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -197,7 +189,7 @@ CREATE TABLE `branch` (
   `zip_code` int(32) NOT NULL,
   `postal_code` varchar(32) NOT NULL,
   `address` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -219,8 +211,8 @@ CREATE TABLE `brands` (
   `id` int(32) NOT NULL,
   `image` varchar(32) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `status` int(2) DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` int(2) DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -248,7 +240,7 @@ CREATE TABLE `contact` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `message` text COLLATE utf8_unicode_ci NOT NULL,
   `seen` int(2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -274,7 +266,7 @@ CREATE TABLE `currency` (
   `name` varchar(100) DEFAULT NULL,
   `symbol` varchar(100) DEFAULT NULL,
   `status` int(2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -376,8 +368,8 @@ CREATE TABLE `deposits` (
   `btc_amo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `btc_wallet` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `trx` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 0,
-  `try` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `try` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -458,7 +450,7 @@ CREATE TABLE `etemplates` (
 --
 
 INSERT INTO `etemplates` (`id`, `esender`, `mobile`, `emessage`, `smsapi`, `created_at`, `updated_at`) VALUES
-(1, 'support@boomchart.com.ng', '+1234567890', '<p>&nbsp;</p>\r\n<div class=\"wrapper\" style=\"background-color: #f2f2f2;\">\r\n<table id=\"emb-email-header-container\" class=\"header\" style=\"border-collapse: collapse; table-layout: fixed; margin-left: auto; margin-right: auto;\" align=\"center\">\r\n<tbody>\r\n<tr>\r\n<td style=\"padding: 0; width: 600px;\"><br />\r\n<div class=\"header__logo emb-logo-margin-box\" style=\"font-size: 26px; line-height: 32px; color: #c3ced9; font-family: Roboto,Tahoma,sans-serif; margin: 6px 20px 20px 20px;\"></div>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<br />\r\n<table class=\"layout layout--no-gutter\" style=\"border-collapse: collapse; table-layout: fixed; margin-left: auto; margin-right: auto; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\" align=\"center\">\r\n<tbody>\r\n<tr>\r\n<td class=\"column\" style=\"padding: 0; text-align: left; vertical-align: top; color: #60666d; font-size: 14px; line-height: 21px; font-family: sans-serif; width: 600px;\"><br />\r\n<div style=\"margin-left: 20px; margin-right: 20px;\"><span style=\"font-size: large;\">Hi {{name}},<br /></span>\r\n<p><strong>{{message}}</strong></p>\r\n</div>\r\n<div style=\"margin-left: 20px; margin-right: 20px; margin-bottom: 24px;\"><br />\r\n<p class=\"size-14\" style=\"margin-top: 0; margin-bottom: 0; font-size: 14px; line-height: 21px;\">Thanks,<br /><strong>BOOMCHART</strong></p>\r\n</div>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>', 'https://api.infobip.com/api/v3/sendsms/plain?user=****&password=****&sender=LetsMine&SMSText={{message}}&GSM={{number}}&type=longSMS', '2018-01-09 23:45:09', '2020-02-13 08:34:29');
+(1, 'info@fluxpay.net', '+1234567890', '<p>&nbsp;</p>\r\n<div class=\"wrapper\" style=\"background-color: #f2f2f2;\">\r\n<table id=\"emb-email-header-container\" class=\"header\" style=\"border-collapse: collapse; table-layout: fixed; margin-left: auto; margin-right: auto;\" align=\"center\">\r\n<tbody>\r\n<tr>\r\n<td style=\"padding: 0; width: 600px;\"><br />\r\n<div class=\"header__logo emb-logo-margin-box\" style=\"font-size: 26px; line-height: 32px; color: #c3ced9; font-family: Roboto,Tahoma,sans-serif; margin: 6px 20px 20px 20px;\">&nbsp;</div>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<br />\r\n<table class=\"layout layout--no-gutter\" style=\"border-collapse: collapse; table-layout: fixed; margin-left: auto; margin-right: auto; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\" align=\"center\">\r\n<tbody>\r\n<tr>\r\n<td class=\"column\" style=\"padding: 0; text-align: left; vertical-align: top; color: #60666d; font-size: 14px; line-height: 21px; font-family: sans-serif; width: 600px;\"><br />\r\n<div style=\"margin-left: 20px; margin-right: 20px;\"><span style=\"font-size: large;\">Hi {{name}},<br /></span>\r\n<p><strong>{{message}}</strong></p>\r\n</div>\r\n<div style=\"margin-left: 20px; margin-right: 20px; margin-bottom: 24px;\"><br />\r\n<p class=\"size-14\" style=\"margin-top: 0; margin-bottom: 0; font-size: 14px; line-height: 21px;\">Thanks,<br /><strong>FLUXPAY</strong></p>\r\n</div>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>', 'https://api.infobip.com/api/v3/sendsms/plain?user=****&password=****&sender=Fluxpay&SMSText={{message}}&GSM={{number}}&type=longSMS', '2018-01-09 23:45:09', '2020-04-09 10:37:06');
 
 -- --------------------------------------------------------
 
@@ -469,8 +461,8 @@ INSERT INTO `etemplates` (`id`, `esender`, `mobile`, `emessage`, `smsapi`, `crea
 CREATE TABLE `faq` (
   `id` int(32) NOT NULL,
   `question` text NOT NULL,
-  `answer` text DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `answer` text,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -536,7 +528,7 @@ CREATE TABLE `int_transfer` (
   `details` text NOT NULL,
   `status` int(2) NOT NULL,
   `type` int(2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -567,7 +559,7 @@ CREATE TABLE `loan` (
   `status` int(2) NOT NULL,
   `reference` int(32) NOT NULL,
   `details` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -589,7 +581,7 @@ CREATE TABLE `logo` (
   `id` int(32) NOT NULL,
   `image_link` varchar(128) NOT NULL,
   `image_link2` varchar(32) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -598,7 +590,7 @@ CREATE TABLE `logo` (
 --
 
 INSERT INTO `logo` (`id`, `image_link`, `image_link2`, `created_at`, `updated_at`) VALUES
-(1, 'images/logo_1581808448.png', 'images/favicon_1581808515.jpg', '2020-02-15 23:15:15', '2020-02-15 22:15:15');
+(1, 'images/logo_1586517300.png', 'images/favicon_1586519343.jpg', '2020-04-10 11:49:03', '2020-04-10 10:49:03');
 
 -- --------------------------------------------------------
 
@@ -610,7 +602,7 @@ CREATE TABLE `pages` (
   `id` int(32) NOT NULL,
   `title` varchar(128) NOT NULL,
   `content` text NOT NULL,
-  `status` int(2) NOT NULL DEFAULT 1,
+  `status` int(2) NOT NULL DEFAULT '1',
   `created_at` varchar(32) NOT NULL,
   `updated_at` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -670,7 +662,7 @@ CREATE TABLE `plan` (
   `min_deposit` int(32) NOT NULL,
   `amount` int(32) NOT NULL,
   `status` int(2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -699,7 +691,7 @@ CREATE TABLE `profits` (
   `trx` varchar(16) NOT NULL,
   `end_date` varchar(32) NOT NULL,
   `date` varchar(32) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -708,11 +700,11 @@ CREATE TABLE `profits` (
 --
 
 INSERT INTO `profits` (`id`, `user_id`, `plan_id`, `amount`, `profit`, `status`, `trx`, `end_date`, `date`, `created_at`, `updated_at`) VALUES
-(84, 11, 6, 20, '1.5123287671232877', 1, '1578535322', '2021-01-31 00:13:53', '2020-01-31 00:13:53', '2020-02-23 23:24:37', '2020-02-23 22:24:37'),
-(86, 11, 7, 500, '98.63013698630137', 1, '1578587513', '2021-01-06 00:13:53', '2020-01-06 00:13:53', '2020-02-23 23:24:37', '2020-02-23 22:24:37'),
-(87, 11, 6, 2, '0.15123287671232877', 1, 'movKAYyaKqQnArWp', '2021-01-31 00:13:53', '2020-01-31 00:13:53', '2020-02-23 23:24:37', '2020-02-23 22:24:37'),
-(88, 11, 10, 2000, '503.01369863013696', 1, 'gQgVDo7DfQ5vkALX', '2021-01-03 00:13:53', '2020-01-03 00:13:53', '2020-02-23 23:24:37', '2020-02-23 22:24:37'),
-(89, 11, 6, 50, '3.780821917808219', 1, 'XzmB9IooWR5F3FvT', '2021-01-31 00:13:53', '2020-01-31 00:13:53', '2020-02-23 23:24:37', '2020-02-23 22:24:37');
+(84, 11, 6, 20, '4.471232876712329', 1, '1578535322', '2021-01-31 00:13:53', '2020-01-31 00:13:53', '2020-04-08 08:20:00', '2020-04-08 07:20:00'),
+(86, 11, 7, 500, '191.0958904109589', 1, '1578587513', '2021-01-06 00:13:53', '2020-01-06 00:13:53', '2020-04-08 08:20:00', '2020-04-08 07:20:00'),
+(87, 11, 6, 2, '0.44712328767123294', 1, 'movKAYyaKqQnArWp', '2021-01-31 00:13:53', '2020-01-31 00:13:53', '2020-04-08 08:20:00', '2020-04-08 07:20:00'),
+(88, 11, 10, 2000, '946.8493150684931', 1, 'gQgVDo7DfQ5vkALX', '2021-01-03 00:13:53', '2020-01-03 00:13:53', '2020-04-08 08:20:00', '2020-04-08 07:20:00'),
+(89, 11, 6, 50, '11.178082191780822', 1, 'XzmB9IooWR5F3FvT', '2021-01-31 00:13:53', '2020-01-31 00:13:53', '2020-04-08 08:20:00', '2020-04-08 07:20:00');
 
 -- --------------------------------------------------------
 
@@ -725,7 +717,7 @@ CREATE TABLE `reply_support` (
   `ticket_id` int(32) NOT NULL,
   `reply` text NOT NULL,
   `status` int(2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -752,8 +744,8 @@ CREATE TABLE `review` (
   `occupation` varchar(255) NOT NULL,
   `image_link` varchar(32) DEFAULT NULL,
   `review` text NOT NULL,
-  `status` int(2) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` int(2) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -781,7 +773,7 @@ CREATE TABLE `savings` (
   `end_date` varchar(32) NOT NULL,
   `reference` int(32) NOT NULL,
   `status` int(2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -804,9 +796,9 @@ INSERT INTO `savings` (`id`, `user_id`, `amount`, `target`, `end_date`, `referen
 
 CREATE TABLE `services` (
   `id` int(32) NOT NULL,
-  `title` text DEFAULT NULL,
-  `details` text DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `title` text,
+  `details` text,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -829,11 +821,11 @@ CREATE TABLE `settings` (
   `id` int(32) NOT NULL,
   `title` varchar(200) DEFAULT NULL,
   `site_name` varchar(200) DEFAULT NULL,
-  `site_desc` text DEFAULT NULL,
+  `site_desc` text,
   `tawk_id` varchar(128) DEFAULT NULL,
   `email` varchar(128) DEFAULT NULL,
   `mobile` varchar(128) DEFAULT NULL,
-  `address` text DEFAULT NULL,
+  `address` text,
   `balance_reg` int(32) DEFAULT NULL,
   `email_notify` int(2) DEFAULT NULL,
   `sms_notify` int(2) DEFAULT NULL,
@@ -847,10 +839,10 @@ CREATE TABLE `settings` (
   `registration` int(2) DEFAULT NULL,
   `withdraw_charge` varchar(191) DEFAULT NULL,
   `collateral_percent` int(32) DEFAULT NULL,
-  `py_scheme` int(2) DEFAULT 0,
-  `loan` int(2) DEFAULT 0,
-  `save` int(2) DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `py_scheme` int(2) DEFAULT '0',
+  `loan` int(2) DEFAULT '0',
+  `save` int(2) DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -859,7 +851,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `title`, `site_name`, `site_desc`, `tawk_id`, `email`, `mobile`, `address`, `balance_reg`, `email_notify`, `sms_notify`, `kyc`, `transfer_charge`, `transfer_chargex`, `upgrade_fee`, `loan_interest`, `email_verification`, `sms_verification`, `registration`, `withdraw_charge`, `collateral_percent`, `py_scheme`, `loan`, `save`, `created_at`, `updated_at`) VALUES
-(1, 'Bank, budget and earn 35x the national average.', 'Probank', 'Start banking, budgeting, and saving up to 1.90% APY when you open an FDIC-Insured Protected Goals Account.', NULL, 'support@boomchart.com.ng', '+1234567894, +2345666666', 'Somewhere in new york london', 2, 0, 0, 1, 5, 10, '200', 10, 1, 1, 1, '3', 50, 1, 1, 1, '2020-02-16 07:09:52', '2020-02-16 06:09:52');
+(1, NULL, 'Fluxpay', 'Digital Payment Solution', NULL, 'info@fluxpay.net', '+234 816 1284 937', '30B2, Remi Fani-Kayode Ave, Ikeja GRA 101212, Ikeja', 2, 0, 0, 1, 5, 10, '200', 10, 1, 1, 1, '3', 50, 1, 1, 1, '2020-04-09 12:07:28', '2020-04-09 11:07:28');
 
 -- --------------------------------------------------------
 
@@ -892,9 +884,9 @@ INSERT INTO `slider` (`id`, `title`, `body`, `image_link`, `status`) VALUES
 
 CREATE TABLE `social_links` (
   `id` int(2) NOT NULL,
-  `type` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `type` longtext COLLATE utf8_unicode_ci,
+  `value` longtext COLLATE utf8_unicode_ci,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -921,7 +913,7 @@ INSERT INTO `social_links` (`id`, `type`, `value`, `created_at`, `updated_at`) V
 CREATE TABLE `subscriber` (
   `id` int(32) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -951,7 +943,7 @@ CREATE TABLE `support` (
   `status` int(2) NOT NULL,
   `user_id` int(32) NOT NULL,
   `ticket_id` int(8) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -977,7 +969,7 @@ CREATE TABLE `transfers` (
   `receiver_id` int(32) NOT NULL,
   `status` int(2) NOT NULL,
   `type` int(32) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1048,9 +1040,9 @@ CREATE TABLE `trending` (
   `details` text NOT NULL,
   `image` varchar(64) NOT NULL,
   `cat_id` int(32) NOT NULL,
-  `views` int(32) NOT NULL DEFAULT 0,
-  `status` int(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `views` int(32) NOT NULL DEFAULT '0',
+  `status` int(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1073,7 +1065,7 @@ INSERT INTO `trending` (`id`, `title`, `details`, `image`, `cat_id`, `views`, `s
 CREATE TABLE `trending_cat` (
   `id` int(8) NOT NULL,
   `categories` varchar(200) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1114,7 +1106,7 @@ CREATE TABLE `ui_design` (
   `header_title` text NOT NULL,
   `header_body` text NOT NULL,
   `nav_type` int(2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1141,17 +1133,17 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `phone` varchar(32) NOT NULL,
   `country` varchar(191) DEFAULT NULL,
-  `status` int(2) NOT NULL DEFAULT 0,
+  `status` int(2) NOT NULL DEFAULT '0',
   `ip_address` varchar(32) NOT NULL,
   `last_login` varchar(32) DEFAULT NULL,
   `kyc_link` varchar(32) DEFAULT NULL,
-  `kyc_status` int(2) NOT NULL DEFAULT 0,
+  `kyc_status` int(2) NOT NULL DEFAULT '0',
   `acct_no` varchar(32) NOT NULL,
   `pin` varchar(32) NOT NULL DEFAULT '0000',
-  `upgrade` int(2) NOT NULL DEFAULT 0,
+  `upgrade` int(2) NOT NULL DEFAULT '0',
   `remember_token` varchar(100) DEFAULT NULL,
   `zip_code` varchar(255) DEFAULT NULL,
-  `address` text DEFAULT NULL,
+  `address` text,
   `city` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1168,7 +1160,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `image`, `email`, `name`, `balance`, `password`, `phone`, `country`, `status`, `ip_address`, `last_login`, `kyc_link`, `kyc_status`, `acct_no`, `pin`, `upgrade`, `remember_token`, `zip_code`, `address`, `city`, `created_at`, `updated_at`, `verification_code`, `sms_code`, `phone_verify`, `email_verify`, `email_time`, `phone_time`) VALUES
-(11, 'user', '1581766827_user.jpg', 'user@test.com', 'Julius Boom', '22391', '$2y$10$Mu4K74ihiCpF8qyBKk58F.94ek4zqePxAdtkjXmr12aUOHfmNG4B6', '123456789', 'United States', 0, '::1', '2020-02-23 23:24:31', '1580485233_user.jpg', 1, '2134742865', '1234', 1, '', '300383', 'Su hotel sajuma UI', 'Georgia', '2020-01-26 16:37:07', '2020-02-23 22:24:31', '', '', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(11, 'user', '1581766827_user.jpg', 'user@test.com', 'Julius Boom', '22391', '$2y$10$Mu4K74ihiCpF8qyBKk58F.94ek4zqePxAdtkjXmr12aUOHfmNG4B6', '123456789', 'United States', 0, '127.0.0.1', '2020-04-08 08:18:38', '1580485233_user.jpg', 1, '2134742865', '1234', 1, '', '300383', 'Su hotel sajuma UI', 'Georgia', '2020-01-26 16:37:07', '2020-04-08 07:18:38', '', '', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (17, 'Julis24', '1567960569.jpg', 'bigboss@ng.com', 'Julis Caesar', '148883', '$2y$10$HE2MiiKPyhufdFxg6SH5f.p9tX0l43YtjrSze9.hrtsATQM9Dgc9C', '+907 332 963 268', '', 0, '::1', '2019-09-07 22:51:53', '', 0, '2124747687', '0', 0, '', '', '', '', '2020-01-26 16:37:07', '0000-00-00 00:00:00', '', '', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (24, 'dsdd', '', 'a@boom.com', 'dvds', '2', '$2y$10$Ag1P06TBBMM50igFwMDUs.zcRdlEkp3GkgV/BE8aSpEMIJqtbDYGG', '+456 787 65', '', 0, '::1', '', '', 0, '2147483647', '0', 0, '', '', '', '', '2020-01-26 16:37:07', '0000-00-00 00:00:00', '', '', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (25, 'kjhgfd', '', 'v@boom.com', 'ghjhg', '4', '$2y$10$dfOfCsP8rfsB8iDzSTElcuFLlWcH3S3/RqOjLmrTGK./AZltMLBw2', '+567 897 654 ', '', 0, '::1', '', '', 0, '2111601879', '0', 0, '', '', '', '', '2020-01-26 16:37:07', '0000-00-00 00:00:00', '', '', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -1228,8 +1220,8 @@ INSERT INTO `winfo` (`id`, `user_id`, `w_id`, `details`) VALUES
 CREATE TABLE `withdrawm` (
   `id` int(32) NOT NULL,
   `method` varchar(128) NOT NULL,
-  `status` int(2) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` int(2) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1265,7 +1257,7 @@ CREATE TABLE `w_history` (
   `status` int(2) NOT NULL,
   `coin_id` varchar(32) NOT NULL,
   `details` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1552,7 +1544,7 @@ ALTER TABLE `alerts`
 -- AUTO_INCREMENT for table `bank`
 --
 ALTER TABLE `bank`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `bank_transfer`
@@ -1564,13 +1556,13 @@ ALTER TABLE `bank_transfer`
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `contact`
@@ -1606,7 +1598,7 @@ ALTER TABLE `etemplates`
 -- AUTO_INCREMENT for table `faq`
 --
 ALTER TABLE `faq`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `gateways`
@@ -1642,7 +1634,7 @@ ALTER TABLE `password_resets`
 -- AUTO_INCREMENT for table `plan`
 --
 ALTER TABLE `plan`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `profits`
@@ -1660,7 +1652,7 @@ ALTER TABLE `reply_support`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `savings`
@@ -1720,7 +1712,7 @@ ALTER TABLE `trending`
 -- AUTO_INCREMENT for table `trending_cat`
 --
 ALTER TABLE `trending_cat`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ui_design`
@@ -1757,8 +1749,3 @@ ALTER TABLE `withdrawm`
 --
 ALTER TABLE `w_history`
   MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
